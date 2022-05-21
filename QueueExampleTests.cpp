@@ -104,7 +104,7 @@ bool testConstQueue()
 		queue5.pushBack(42);
 	}
 	const Queue<int> constQueue = queue5;
-	for (Queue<int>::ConstIterator i = constQueue.begin(); i != constQueue.end(); ++i) {
+    for (Queue<int>::ConstIterator i = constQueue.begin(); i != constQueue.end(); ++i) {
 		AGREGATE_TEST_RESULT(testResult, (*i == 42));
 	}
 

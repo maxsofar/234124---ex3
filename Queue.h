@@ -1,8 +1,6 @@
 #ifndef EX3_QUEUE_H
 #define EX3_QUEUE_H
 
-#define CAPACITY 100
-
 template <class T>
 class Queue {
 public:
@@ -32,14 +30,20 @@ private:
     int m_front;
     int m_back;
     T* m_queue;
+
+    static const int INITIAL_SIZE = 5;
+    static const int EXPAND_RATE = 2;
+    void expand();
+    void shrink();
+
 };
 
 template <class T>
 Queue<T>::Queue() {
-    m_capacity = CAPACITY;
+    m_capacity = INITIAL_SIZE;
     m_size = m_front = 0;
     m_back = -1;
-    m_queue = new T[CAPACITY];
+    m_queue = new T[INITIAL_SIZE];
 }
 
 template <class T>
@@ -77,8 +81,23 @@ Queue<T>::Queue(const Queue<T>& queue1) {
 }
 
 template <class T>
+void Queue<T>::expand() {
+    m_capacity *= EXPAND_RATE;
+    T* newQueue = new T[m_capacity];
+    for (int i = 0; i < m_size; ++i) {
+        newQueue[i] = m_queue[m_front + i];
+    }
+    delete[] m_queue;
+    m_queue = newQueue;
+}
+
+template <class T>
 void Queue<T>::pushBack(T x) {
-    m_back = (m_back + 1) % m_capacity;
+    if (m_size == m_capacity - 1) {
+        expand();
+    }
+
+    ++m_back;
     m_queue[m_back] = x;
     ++m_size;
 }
@@ -92,8 +111,25 @@ T& Queue<T>::front(int x) {
 }
 
 template <class T>
+void Queue<T>::shrink() {
+    m_capacity /= EXPAND_RATE;
+    T* newQueue = new T[m_capacity];
+    for (int i = 0; i < m_size; ++i) {
+        newQueue[i] = m_queue[m_front + i];
+    }
+    delete m_queue;
+    m_queue = newQueue;
+    m_front = 0;
+    m_back = m_size;
+}
+
+template <class T>
 void Queue<T>::popFront() {
-    m_front = (m_front + 1) % m_capacity;
+    if (m_size < m_capacity / EXPAND_RATE) {
+        shrink();
+    }
+
+    ++m_front;
     --m_size;
 }
 
