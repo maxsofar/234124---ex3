@@ -13,11 +13,11 @@ public:
 
     ~HealthPoints() = default;
 
-    HealthPoints operator-(int x);
-
     HealthPoints& operator+=(int x);
 
     HealthPoints& operator-=(int x);
+
+    HealthPoints operator-(int x);
 
     bool operator ==(const HealthPoints& rightSide) const;
 
@@ -33,11 +33,10 @@ public:
 
     class InvalidArgument {};
 
-    //-----------//
-    friend HealthPoints operator+(int x, const HealthPoints& hp);
-
 private:
     int m_HP, m_maxHP;
+
+    friend HealthPoints operator+(int x, const HealthPoints& hp);
 
     friend std::ostream& operator<<(std::ostream&, const HealthPoints&);
 };
