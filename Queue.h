@@ -227,7 +227,7 @@ int Queue<T>::size() const
 }
 
 template <class T, class Condition>
-Queue<T> filter(const Queue<T>& queue, Condition c)
+Queue<T> filter(const Queue<T>& queue, Condition condition)
 {
     if (queue.size() == 0) {
         throw (typename Queue<T>::EmptyQueue());
@@ -235,7 +235,7 @@ Queue<T> filter(const Queue<T>& queue, Condition c)
     Queue<T> result;
 
     for (const T& element : queue) {
-        if (c(element)) {
+        if (condition(element)) {
             result.pushBack(element);
         }
     }
@@ -243,13 +243,13 @@ Queue<T> filter(const Queue<T>& queue, Condition c)
 }
 
 template <class T, class Function>
-void transform(Queue<T>& queue, Function f)
+void transform(Queue<T>& queue, Function function)
 {
     if (queue.size() == 0) {
         throw (typename Queue<T>::EmptyQueue());
     }
     for (T& element : queue) {
-        f(element);
+        function(element);
     }
 }
 
@@ -321,7 +321,7 @@ public:
     class InvalidOperation{};
 
 private:
-    const Queue<T>* queue;
+    const Queue<T>* m_queuePtr;
     int m_index;
 
     /*
@@ -336,20 +336,20 @@ private:
 
 template <class T>
 Queue<T>::Iterator::Iterator(const Queue<T>* queue, int index) :
-    queue(queue), m_index(index)
+    m_queuePtr(queue), m_index(index)
 {}
 
 template <class T>
 
 T& Queue<T>::Iterator::operator*() const
 {
-    return queue->m_queue[m_index];
+    return m_queuePtr->m_queue[m_index];
 }
 
 template <class T>
 typename Queue<T>::Iterator& Queue<T>::Iterator::operator++()
 {
-    if (this->m_index == queue->m_back+1) {
+    if (this->m_index == m_queuePtr->m_back+1) {
         throw InvalidOperation();
     }
     ++m_index;
@@ -406,7 +406,7 @@ public:
     class InvalidOperation{};
 
 private:
-    const Queue<T>* queue;
+    const Queue<T>* m_queuePtr;
     int m_index;
 
     /*
@@ -421,19 +421,19 @@ private:
 
 template <class T>
 Queue<T>::ConstIterator::ConstIterator(const Queue<T>* queue, int index) :
-        queue(queue), m_index(index)
+        m_queuePtr(queue), m_index(index)
 {}
 
 template <class T>
 const T& Queue<T>::ConstIterator::operator*() const
 {
-    return queue->m_queue[m_index];
+    return m_queuePtr->m_queue[m_index];
 }
 
 template <class T>
 typename Queue<T>::ConstIterator& Queue<T>::ConstIterator::operator++()
 {
-    if (this->m_index == queue->m_back+1) {
+    if (this->m_index == m_queuePtr->m_back+1) {
         throw InvalidOperation();
     }
     ++m_index;
