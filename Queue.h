@@ -26,7 +26,7 @@ public:
      * @param entity - the item to be added
      *
     */
-    void pushBack(const T& entity);
+    void pushBack(const T entity);
 
     /*
      * front
@@ -176,7 +176,7 @@ void Queue<T>::expand()
 }
 
 template <class T>
-void Queue<T>::pushBack(const T& entity)
+void Queue<T>::pushBack(const T entity)
 {
     if (m_front + m_size == m_capacity) {
         expand();
