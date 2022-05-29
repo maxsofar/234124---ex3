@@ -138,15 +138,16 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& queue)
     if (&queue == this) {
         return *this;
     }
-    delete[] m_queue;
-    m_queue = new T[queue.size()];
+    T* toBeDeleted = m_queue;
+    m_queue = new T[queue.m_capacity];
     m_size = queue.size();
     m_capacity = queue.m_capacity;
     m_front = queue.m_front;
     m_back = queue.m_back;
-    for (int i = 0; i < m_size; ++i) {
+    for (int i = queue.m_front; i <= queue.m_back; ++i) {
         m_queue[i] = queue.m_queue[i];
     }
+    delete[] toBeDeleted;
     return *this;
 }
 
@@ -155,7 +156,7 @@ Queue<T>::Queue(const Queue<T>& queue) :
     m_capacity(queue.m_capacity), m_size(queue.size()), m_front(queue.m_front),
     m_back(queue.m_back), m_queue(new T[queue.m_capacity])
 {
-    for (int i = 0; i < m_size; ++i) {
+    for (int i = queue.m_front; i <= queue.m_back; ++i) {
     m_queue[i] = queue.m_queue[i];
     }
 }
@@ -170,12 +171,14 @@ void Queue<T>::expand()
     }
     delete[] m_queue;
     m_queue = newQueue;
+    m_front = 0;
+    m_back = m_size - 1;
 }
 
 template <class T>
 void Queue<T>::pushBack(const T& entity)
 {
-    if (this->size() == m_capacity - 1) {
+    if (m_front + m_size == m_capacity) {
         expand();
     }
 
@@ -204,7 +207,7 @@ void Queue<T>::shrink()
     delete[] m_queue;
     m_queue = newQueue;
     m_front = 0;
-    m_back = m_size;
+    m_back = m_size - 1;
 }
 
 template <class T>
@@ -243,13 +246,13 @@ Queue<T> filter(const Queue<T>& queue, Condition condition)
 }
 
 template <class T, class Function>
-void transform(Queue<T>& queue, Function function)
+void transform(Queue<T>& queue, Function func)
 {
     if (queue.size() == 0) {
         throw (typename Queue<T>::EmptyQueue());
     }
     for (T& element : queue) {
-        function(element);
+        func(element);
     }
 }
 
@@ -304,6 +307,8 @@ public:
     */
     Iterator& operator++();
 
+    Iterator operator++(int);
+
     /*
      * != operator overloading
      *
@@ -357,6 +362,13 @@ typename Queue<T>::Iterator& Queue<T>::Iterator::operator++()
 }
 
 template <class T>
+typename Queue<T>::Iterator Queue<T>::Iterator::operator++(int) {
+    Iterator result = *this;
+    ++*this;
+    return result;
+}
+
+template <class T>
 bool Queue<T>::Iterator::operator!=(const Iterator& i) const
 {
     return m_index != i.m_index;
@@ -388,6 +400,8 @@ public:
      *      An Iterator reference with index value increased  by one
     */
     ConstIterator& operator++();
+
+    const ConstIterator operator++(int);
 
     /*
      * != operator overloading
@@ -438,6 +452,13 @@ typename Queue<T>::ConstIterator& Queue<T>::ConstIterator::operator++()
     }
     ++m_index;
     return *this;
+}
+
+template <class T>
+const typename Queue<T>::ConstIterator Queue<T>::ConstIterator::operator++(int) {
+    ConstIterator result = *this;
+    ++*this;
+    return result;
 }
 
 template <class T>

@@ -62,12 +62,13 @@ public:
     /*
      * == operator overloading
      *
-     * @param rightSide - The instance of HealthPoints to be compared to.
+     * @param lhs - The instance of HealthPoints to be compared to on the left side
+     * @param rhs - The instance of HealthPoints to be compared to on the right side
      * @return
      *      True if HealthPoints instances are equal
      *      False else
     */
-    bool operator ==(const HealthPoints& rightSide) const;
+    bool operator==(const HealthPoints& rhs);
 
     /*
      * != operator overloading
@@ -141,6 +142,17 @@ private:
      *      New instance of HealthPoints with HP added.
     */
     friend HealthPoints operator+(int hp, const HealthPoints& healthPoints);
+
+    /*
+     * == operator overloading
+     *
+     * @param lhs - The instance of HealthPoints to be compared to on the left side
+     * @param rhs - The instance of HealthPoints to be compared to on the right side
+     * @return
+     *      True if HealthPoints instances are equal
+     *      False else
+    */
+    friend bool operator==(const HealthPoints& lhs, const HealthPoints& rhs);
 
     /*
      * << operator overloading
