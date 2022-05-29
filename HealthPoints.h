@@ -60,17 +60,6 @@ public:
     HealthPoints operator-(int hp);
 
     /*
-     * == operator overloading
-     *
-     * @param lhs - The instance of HealthPoints to be compared to on the left side
-     * @param rhs - The instance of HealthPoints to be compared to on the right side
-     * @return
-     *      True if HealthPoints instances are equal
-     *      False else
-    */
-    bool operator==(const HealthPoints& rhs);
-
-    /*
      * != operator overloading
      *
      * @param rightSide - The instance of HealthPoints to be compared to.
@@ -141,7 +130,7 @@ private:
      * @return
      *      New instance of HealthPoints with HP added.
     */
-    friend HealthPoints operator+(int hp, const HealthPoints& healthPoints);
+    friend HealthPoints operator+(int hp, const HealthPoints& rhs);
 
     /*
      * == operator overloading

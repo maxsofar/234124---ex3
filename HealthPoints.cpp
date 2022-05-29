@@ -70,18 +70,6 @@ HealthPoints HealthPoints::operator-(int hp)
     return result;
 }
 
-bool HealthPoints::operator==(const HealthPoints& rhs)
-{
-    if (rhs.m_HP < 0) {
-        throw (HealthPoints::InvalidArgument());
-    }
-    if (this->m_HP == rhs.m_HP) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 bool HealthPoints::operator!=(const HealthPoints& rightSide) const
 {
     if (this->m_HP != rightSide.m_HP) {
