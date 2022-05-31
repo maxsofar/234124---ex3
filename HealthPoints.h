@@ -39,7 +39,7 @@ public:
      * @return
      *      New instance of HealthPoints with HP added.
     */
-    HealthPoints operator+(int hp);
+    HealthPoints operator+(int hp) const;
 
     /*
      * -= operator overloading
@@ -57,7 +57,7 @@ public:
      * @return
      *      New instance of HealthPoints with HP subtracted.
     */
-    HealthPoints operator-(int hp);
+    HealthPoints operator-(int hp) const;
 
     /*
      * != operator overloading

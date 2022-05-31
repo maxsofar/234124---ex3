@@ -31,7 +31,7 @@ HealthPoints& HealthPoints::operator-=(int hp) {
     return *this;
 }
 
-HealthPoints HealthPoints::operator+(int hp)
+HealthPoints HealthPoints::operator+(int hp) const
 {
     HealthPoints result(*this);
     if (result.m_HP + hp < 0) {
@@ -57,7 +57,7 @@ HealthPoints operator+(int hp, const HealthPoints& healthPoints)
     return result;
 }
 
-HealthPoints HealthPoints::operator-(int hp)
+HealthPoints HealthPoints::operator-(int hp) const
 {
     HealthPoints result(*this);
     if (this->m_HP - hp > this->m_maxHP) {
