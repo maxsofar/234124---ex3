@@ -12,7 +12,7 @@ public:
      * @return
      *      A new instance of HealthPoints.
     */
-    HealthPoints(int maxHP = 100);
+    HealthPoints(int maxHP = DEFAULT_HP);
 
     /*
      * Default Copy Constructor, Destructor, and Assignment operator overloading
@@ -120,6 +120,7 @@ public:
     class InvalidArgument {};
 
 private:
+    static const int DEFAULT_HP = 100;
     int m_HP, m_maxHP;
 
     /*
