@@ -109,7 +109,7 @@ private:
     T* m_queue;
 
     /*
-     * expand - expands the capacity of queue
+     * expand - increases the capacity of queue
     */
     void expand();
 
