@@ -313,8 +313,6 @@ public:
     */
     Iterator& operator++();
 
-    Iterator operator++(int);
-
     /*
      * != operator overloading
      *
@@ -368,13 +366,6 @@ typename Queue<T>::Iterator& Queue<T>::Iterator::operator++()
 }
 
 template <class T>
-typename Queue<T>::Iterator Queue<T>::Iterator::operator++(int) {
-    Iterator result = *this;
-    ++*this;
-    return result;
-}
-
-template <class T>
 bool Queue<T>::Iterator::operator!=(const Iterator& i) const
 {
     return m_index != i.m_index;
@@ -406,8 +397,6 @@ public:
      *      An Iterator reference with index value increased  by one
     */
     ConstIterator& operator++();
-
-    const ConstIterator operator++(int);
 
     /*
      * != operator overloading
@@ -450,6 +439,7 @@ const T& Queue<T>::ConstIterator::operator*() const
     return m_queuePtr->m_queue[m_index];
 }
 
+
 template <class T>
 typename Queue<T>::ConstIterator& Queue<T>::ConstIterator::operator++()
 {
@@ -458,13 +448,6 @@ typename Queue<T>::ConstIterator& Queue<T>::ConstIterator::operator++()
     }
     ++m_index;
     return *this;
-}
-
-template <class T>
-const typename Queue<T>::ConstIterator Queue<T>::ConstIterator::operator++(int) {
-    ConstIterator result = *this;
-    ++*this;
-    return result;
 }
 
 template <class T>
